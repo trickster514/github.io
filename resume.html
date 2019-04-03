@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patrick's Brokenness</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!--code used from:
+    
+https://chromium.googlesource.com/chromium/src/+/d749245dd21f06f58242fe41ce2ea9dbb014485b/chrome/browser/resources/pdf/elements/viewer-pdf-toolbar/viewer-pdf-toolbar.html
+    
+-->
+    <link rel="import" href="chrome://resources/polymer/polymer/polymer.html">
+    <link rel="import" href="../viewer-page-selector/viewer-page-selector.html">
+    <link rel="import" href="chrome://resources/polymer/core-icons/image-icons.html">
+    <link rel="import" href="chrome://resources/polymer/core-toolbar/core-toolbar.html">
+    <link rel="import" href="chrome://resources/polymer/core-transition/core-transition-css.html">
+    <link rel="import" href="chrome://resources/polymer/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="chrome://resources/polymer/paper-progress/paper-progress.html">
+    <link rel="import" href="chrome://resources/polymer/paper-shadow/paper-shadow.html">
+<!--
+-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body> 
+    <nav class="navbar navbar-inverse" style="background-color: #063C3F">
+        
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a draggable="false" class="navbar-brand" href="index.html" ></a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="index.html">Home</a></li>
+                    <li><a href="projects.html">Programming Projects</a></li>
+                    <li><a href="portfolio.html">Graphics</a></li>
+                    <li><a href="resume.html">Resume</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                                        <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Finished Web Projects
+                        <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                            <a href="pokedexHunt.html">Pokedex Scavenger Hunt</a></li>
+                         <li>   <a href="elmsHunt.html">Elms College Trivia Hunt</a>  </li>  
+                        </ul>
+                        
+                </ul>
+            </div>
+       
+    </nav>
+    <div class="container-fluid">
+    <iframe src="Resume.pdf">
+<!--code used from:
+    
+https://chromium.googlesource.com/chromium/src/+/d749245dd21f06f58242fe41ce2ea9dbb014485b/chrome/browser/resources/pdf/elements/viewer-pdf-toolbar/viewer-pdf-toolbar.html
+    
+-->
+        <polymer-element name="viewer-pdf-toolbar">
+            <template>
+                <link rel="stylesheet" href="viewer-pdf-toolbar.css">
+                <div id="animatable">
+                    <paper-shadow fit></paper-shadow>
+                    <paper-progress value="{{loadProgress}}"></paper-progress>
+                    <core-toolbar class="core-narrow">
+                        <div id="aligner" horizontal justified layout center>
+                            <span id="title" class="invisible ">{{docTitle}}</span>
+                            <viewer-page-selector id="pageselector" class="invisible"
+                            index="{{pageIndex}}" docLength="{{docLength}}">
+                            </viewer-page-selector>
+                            <div id="buttons" class="invisible">
+                                <paper-icon-button icon="image:rotate-right"
+                                on-click="{{rotateRight}}"></paper-icon-button>
+                                <template if="{{hasBookmarks}}">
+                                <paper-icon-button icon="bookmark-outline"
+                                on-click="{{toggleBookmarks}}"></paper-icon-button>
+                                </template>
+                                <paper-icon-button icon="save"
+                                on-click="{{save}}"></paper-icon-button>
+                                <paper-icon-button icon="print"
+                                on-click="{{print}}"></paper-icon-button>
+                            </div>
+                        </div>
+                    </core-toolbar>
+                </div>
+            </template>
+            <script src="viewer-pdf-toolbar.js"></script>
+        </polymer-element>
+    </iframe>
+    </div>
+</body>
+</html>

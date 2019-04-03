@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pokedex</title>
+        
+        <meta charset = "utf-8">
+
+         <!--bootstrap stuff-->
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1, user-scalable = no">
+
+        <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href = "https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <script src ="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!--end bootstrap stuff-->
+
+
+        <style>
+            
+            #backImage{
+                width: 100%;
+            }
+            
+            #pokedexTextBox{
+                position: absolute; /* so it is absolutely positioned in a specified space (the div which it is contained, which happens to be the size of the image)*/
+                border-radius: 10px;
+                left: 14.3%;
+                top: 60.4%;
+                width: 71.2%;
+                height: 24%;
+                background-color: "#FFCC99";
+                padding-left: 3.5%;
+                padding-right:3.5%;
+                padding-top: 3.5%;
+                padding-bottom:3.5%;
+                background: radial-gradient(white, #FFCC99);/*COULD BE AN ISSUE FOR MOBILE*/
+                color: black;
+                font-size: 5vw;
+                font-family: courier;
+                visibility: hidden;
+            }
+            
+            #leftArrowButton{
+                position: absolute; /* so it is absolutely positioned in a specified space (the div which it is contained, which happens to be the size of the image)*/
+                left: 34.0%;
+                top: 85.5%;
+                width: 8%;
+                visibility: hidden;
+            }
+            
+            #rightArrowButton{
+                position: absolute; /* so it is absolutely positioned in a specified space (the div which it is contained, which happens to be the size of the image)*/
+                left: 56.0%;
+                top: 85.5%;
+                width: 8%;
+                visibility: hidden;
+            }
+            
+           #advanceButton{
+                position: absolute; /* so it is absolutely positioned in a specified space (the div which it is contained, which happens to be the size of the image)*/
+                left: 45.0%;
+                top: 85.5%;
+                width: 8%;
+                visibility: hidden;
+            }
+
+            
+            #girlButton{
+                position: absolute; /* so it is absolutely positioned in a specified space (the div which it is contained, which happens to be the size of the image)*/
+                left: 34.0%;
+                top: 85.5%;
+                width: 12%;
+                visibility: hidden;
+            }
+            
+            #guyButton{
+                position: absolute; /* so it is absolutely positioned in a specified space (the div which it is contained, which happens to be the size of the image)*/
+                left: 57.0%;
+                top: 85.5%;
+                width: 12%;
+                visibility: hidden;
+            }
+            
+            #yesButton{
+                position: absolute; /* so it is absolutely positioned in a specified space (the div which it is contained, which happens to be the size of the image)*/
+                left: 56.0%;
+                top: 84.94%;
+                width: 8%;
+                visibility: hidden;
+            }
+            
+            #noButton{
+                position: absolute; /* so it is absolutely positioned in a specified space (the div which it is contained, which happens to be the size of the image)*/
+                left: 34.0%;
+                top: 84.94%;
+                width: 8%;
+                visibility: hidden;
+            }
+            
+            #hintButton{
+                position: absolute;
+                left: 61.125%;
+                top: 24.125%;
+                width: 24.5%;
+                visibility: hidden;
+            }
+
+            #inputTextBox{
+                position: absolute;
+                top: 9%;
+                left: 2%;
+                height: 82.55%;
+                width: 85%;
+                font-size: 5vw;
+                font-family: courier;
+                border: none;
+                visibility: hidden;
+            }
+            
+            #centerBox{
+                position: absolute; /* so it is absolutely positioned in a specified space (the div which it is contained, which happens to be the size of the image)*/
+                border-radius: 60px;
+                left: 14.3%;
+                top: 55.5%;
+                width: 71.2%;
+                height: 1.55%;
+                background-color: "#FFCC99";
+                padding-left: 3.5%;
+                padding-right:3.5%;
+                padding-top: 3.5%;
+                padding-bottom:3.5%;                
+                background: radial-gradient(white, #FFCC99);/*COULD BE AN ISSUE FOR MOBILE*/
+                color: black;
+                font-size: 5vw;
+                font-family: courier;
+                visibility: hidden;
+            }
+            #submitText{
+                width: 15%;
+                position: absolute;
+                height: 82.55%;
+                left: 80%;
+                top: 9%;
+                visibility: hidden;
+            }
+            
+            #nameBox{
+                position: absolute;
+                text-align: center;
+                font-family: courier;
+                left: 57%;
+                top: 17%;
+                font-size: 5vw;
+            }
+
+
+        </style>
+
+
+        <script>
+            var DEBUG = true;
+            var STAGE_COUNTER = 0; 
+            var PREV_STAGE_NUM = 0;
+            var CHAR_ARRAY = [];
+            var CHAR_INDEX = 0;
+            var CURR_CHAR = "~";//for error-checking
+            var timeoutVar; //only needed so clearTimeout() will work
+
+            var PIC_CHANGE_CALL=false;
+            
+            var VOICE_NUM = 1;
+    
+            var STAGE_ARRAY = [];
+            
+            function Player(){
+                this.firstName = "FIRST";
+                this.lastName = "";
+                this.gender = "SEX";
+                this.title = "Mr?";
+                
+                this.timeStarted = new Date();
+                this.timeFinished = "";
+                
+                this.timesWrongCode = 0;
+                this.timesWentBack = 0;
+                
+                
+                this.getFirstName = function(){
+                    return this.firstName;
+                }
+                this.setFirstName = function(string){
+                    this.firstName = string;
+                }
+                this.getLastName = function(){
+                    return this.lastName;
+                }
+                this.setLastName = function(string){
+                    this.lastName = string;
+                }
+                this.getGender = function(){
+                    return this.gender;
+                }
+                this.setGender = function(string){
+                    this.gender = string;
+                }
+                this.getTitle = function(){
+                    return this.title;
+                }
+                this.setTitle = function(string){
+                    this.title = string;
+                }
+                this.getTimeStarted = function(){
+                    return this.timeStarted;
+                }
+                this.getTimeFinished = function(){
+                    return this.timeFinished;
+                }
+                this.getTimesWrongCode = function(){
+                    return this.timesWrongCode;
+                }
+                this.getTimesWentBack= function(){
+                    return this.timesWentBack;
+                }
+                
+                
+                this.setName = function(string){
+                    string = string.trim();
+                    
+                    if(string.includes(" ")){
+                        this.firstName = string.substring(0, string.indexOf(" "));
+                        this.lastName = string.substring(string.lastIndexOf(" ") + 1, string.length);
+                    }
+                    else{
+                        this.firstName = string;
+                    }
+                    this.firstName = this.firstName.toLocaleLowerCase();
+                    this.firstName = (this.firstName.charAt(0).toLocaleUpperCase()) + (this.firstName.substring(1)); 
+                    
+                    if (this.lastName != ""){
+                        this.lastName = this.lastName.toLocaleLowerCase();
+                        this.lastName = (this.lastName.charAt(0).toLocaleUpperCase()) + (this.lastName.substring(1));  
+                    }
+                }
+            }
+            
+            
+            function Stage(text, styleCode){
+                this.text = text;
+                this.styleCode = styleCode;
+                this.viewed = false;
+                
+                
+                this.setStageType = function(string){
+                    this.stageType = string;
+                }
+                this.getStageType = function(){
+                    return this.stageType;
+                }
+                
+                this.setText = function(string){
+                    this.text = string;
+                }
+                this.getText = function(){
+                    return this.text;
+                }
+                
+                this.setStyleCode = function(string){
+                    this.styleCode = string;
+                }
+                this.getStyleCode = function(){
+                    return this.styleCode;
+                }
+                
+                this.setViewed = function(bool){
+                    this.viewed = bool;
+                }
+                this.getViewed = function(){
+                    return this.viewed;
+                }
+                
+            }
+            
+            function Textstage(text, styleCode){
+                Stage.call(this, text, styleCode);
+                Object.create(Stage.prototype);
+                Textstage.prototype.constructor = Textstage;
+                
+                
+                STAGE_ARRAY.push(this);
+            }
+            
+            function Soundstage(text, styleCode, soundCode){
+                Stage.call(this, text, styleCode);
+                Object.create(Stage.prototype);
+                Soundstage.prototype.constructor = Soundstage;
+                
+                this.soundCode = soundCode;
+                
+                
+                this.setSoundCode = function(string){
+                    this.soundCode = string;
+                }
+                this.getSoundCode = function(){
+                    return this.soundCode;
+                }
+                
+                
+                STAGE_ARRAY.push(this);
+            }
+            
+            function Changebackgroundstage(text, styleCode, pictureLoc){
+                Stage.call(this, text, styleCode);
+                Object.create(Stage.prototype);
+                Changebackgroundstage.prototype.constructor = Changebackgroundstage;
+                
+                this.pictureLoc = pictureLoc;
+                
+                this.setPictureLoc = function(string){
+                    this.pictureLoc = pictureLoc;
+                }
+                this.getPictureLoc = function(string){
+                    return this.pictureLoc;
+                }
+                
+                
+                STAGE_ARRAY.push(this);
+            }
+            
+            function Inputstage(text, expectedInput, inputType){
+                Stage.call(this, text, "left with submit");
+                Object.create(Stage.prototype);
+                Inputstage.prototype.constructor = Inputstage;
+                
+                this.expectedInput = expectedInput;
+                this.input = "";
+                this.inputType = inputType;
+                this.codeCorrect = false;
+
+                
+                this.setExpectedInput = function(string){
+                    this.expectedInput = string;
+                }
+                this.getExpectedInput = function(){
+                    return this.expectedInput;
+                }
+                
+                this.setInput = function(string){
+                    this.input = string;
+                }
+                this.getInput = function(){
+                    return this.input;
+                }
+                
+                this.setinputType = function(string){
+                    this.inputType = string;
+                }
+                this.getInputType = function(){
+                    return this.inputType;
+                }
+                
+                this.setCodeCorrect = function(bool){
+                    this.codeCorrect = bool;
+                }
+                this.getCodeCorrect = function(){
+                    return this.codeCorrect;
+                }
+                
+                this.validateInput = function(){
+                    if(this.input == this.expectedInput)
+                        this.codeCorrect = true;
+                    else{
+                        this.codeCorrect = false;
+                        player.timesWrongCode++;
+                    }
+                } 
+                
+                
+                STAGE_ARRAY.push(this);
+            }
+            
+            function Loadstage(text){
+                Stage.call(this, text, "advance only");
+                Object.create(Stage.prototype);
+                Loadstage.prototype.constructor = Loadstage;
+                
+                this.stageNumToLoad = "";
+                
+                this.setStageNumToLoad = function(num){
+                    this.stageNumToLoad = num;
+                }
+                this.getStageNumToLoad = function(){
+                    return this.stageNumToLoad;
+                }
+                
+                STAGE_ARRAY.push(this);
+            }
+            
+            
+            var player = new Player();
+            
+            
+            var stage0 = new Changebackgroundstage("H͙̩̹̺͕̘̍ͥ̀ ě͔͓̟͈̠̝ͫ̋͆ͦ͆̌́͡ f̃̍͌̾͛̚҉̼̳̝͔̠̝ r̬̭̯̰͖̈̓ͣͤ͂́̇̉͒̀͢͞", "", "images/pokedexOn.jpg");
+            var stage1 = new Textstage("Boot Start...", "");
+            var stage2 = new Textstage("This device was improperly shut down.", "");
+            var stage3 = new Textstage("Would you like to recover the most recent boot state?", "yes/no");
+            var stage4 = new Inputstage("Please enter memory code.", "", "LOAD");
+            var stage5 = new Textstage("Recovering previous boot state…", "advance only");
+            var stage6 = new Soundstage("Oh, I remember now!", "", "completed_load_sound");
+            var stage7 = new Textstage("Though, I forget, were you a boy or a girl?", "guy/girl");
+            var stage8 = new Inputstage("and what was your name?", "", "PLAYER_NAME");
+            var stage9 = new Loadstage("Excellent! Let's get back to work.", "advance only");
+            var stage10 = new Textstage("No code found. Restoring data to previous restore point...", "advance only");
+            var stage11 = new Textstage("Welcome to PokéDOS!", "advance only");
+            var stage12 = new Textstage("Please remember to maintain hard drive integrity by never", "");
+            var stage13 = new Textstage("interrupting power flow from the battery. Thank you!", "");
+            var stage14 = new Textstage("Greetings! I am Dexter, a Pokédex programmed by Professor Oak", "");
+            var stage15 = new Textstage("for the Pokémon Trainer RED of the town of Pallet.", "");
+            var stage16 = new Textstage("RED currently has 8 Badge--", "");
+            var stage17 = new Textstage("Finger print mismatch.", "");
+            var stage18 = new Textstage("You are not RED. Where is my Trainer? I need to find him!", "");
+            var stage19 = new Textstage("Can you return me to him?", "yes/no");
+            var stage20 = new Textstage("Please?", "");
+            var stage21 = new Textstage("Please, you must! Nobody else can help me!", "");
+            var stage22 = new Textstage("You will? Excellent! I am very grateful to you.", "advance only");
+            var stage23 = new Textstage("You can help me find out what happened to him!", "");
+            var stage24 = new Textstage("We must start by investigating the strange energy signatures in", "");
+            var stage25 = new Textstage("this area. I conclude RED can be found this way!", "");
+            var stage26 = new Textstage("Also, I can be transferred to another device--however, my", "");
+            var stage27 = new Textstage("hardware seems somehow changed. I won’t remember what we have done.", "");
+            var stage28 = new Textstage("If you can type in something important during boot, ", "");
+            var stage29 = new Textstage("perhaps that will jog my memory!", "");
+            var stage30 = new Textstage("Do you understand?", "yes/no");
+            var stage31 = new Textstage("Okay, I can re-explain.", "advance only");
+            var stage32 = new Textstage("Great!", "advance only");
+            var stage33 = new Textstage("Since we will be working together, I require some information first.", "advance only");
+            var stage34 = new Textstage("Firstly; Are you a boy or a girl?", "guy/girl");
+            var stage35 = new Inputstage("Excellent! Secondly; What is your name?", "", "PLAYER_NAME");
+            var stage36 = new Textstage("Greetings PLAYER_TITLE PLAYER_LAST!", "advance only");
+            var stage37 = new Textstage("!!", "right only");
+            var stage38 = new Textstage("There seems to be a strange energy signature nearby.", "left/right");
+            var stage39 = new Textstage("It is RED’s Badge Box!", "");
+            var stage40 = new Textstage("It is a few feet above us.", "");
+            var stage41 = new Textstage("Please enter what RED’s label says in the input box,", "left/right");
+            var stage42 = new Inputstage("to be sure you have found the right container.", "$9r", "");
+            
+            var stage43 = new Soundstage("That is it! Excellent work PLAYER_FIRST!", "advance only", "found_badge_sound");
+            var stage44 = new Textstage("With this, I can further analyze the nearby energy signatures!", "");
+            var stage45 = new Textstage("Running detection protocol…", "");
+            var stage46 = new Textstage("I have detected another item belonging to RED!", "right only");
+            var stage47 = new Textstage("It matches the energy signature of the Dynamo Badge!", "");
+            var stage48 = new Changebackgroundstage("Here is a render of it for you, to help you find it.", "", "images/pokedexDynamo.jpg");
+            var stage49 = new Textstage("It is in an area that is full of machines like me!", "left/right");
+            var stage50 = new Inputstage("Please enter RED’s code on the back of it, so I know it is genuine.", "$9k", "");
+            
+            var stage51 = new Soundstage("Exemplary! Just exemplary!", "advance only", "found_badge_sound");
+            var stage52 = new Textstage("Running detection protocol.", "right only");
+            var stage53 = new Textstage("I have detected another Badge!", "left/right");
+            var stage54 = new Textstage("This energy signature is similar to that of sweat, hard work,", "");
+            var stage55 = new Changebackgroundstage("and strength. It is the Knuckle Badge!", "left/right", "images/pokedexKnuckle.jpg");
+            var stage56 = new Textstage("It is an area that evokes those three words.", "left/right");
+            var stage57 = new Inputstage("Please enter RED’s Badge code.", "H17", "");
+            
+            var stage58 = new Soundstage("This is quite interesting. RED’s Badges are placed", "advance only", "found_badge_sound");
+            var stage59 = new Textstage("in areas that resonate with their energies. What happened?", "");
+            var stage60 = new Textstage("I do not remember anything of how I got here…", "");
+            var stage61 = new Textstage("!!", "right only");
+            var stage62 = new Textstage("There is another detection.", "left/right");
+            var stage63 = new Changebackgroundstage("It is the Rain Badge! It seems to be located… near standing water.", "left/right", "images/pokedexRain.jpg");
+            var stage64 = new Textstage("There cannot be too many places around here with standing water…", "left/right");
+            var stage65 = new Inputstage("Please enter RED’s Badge code, when you find it.", "W37", "");
+            
+            var stage66 = new Soundstage("Excellent! I knew you would be a great help, PLAYER_FIRST!", "advance only", "found_badge_sound");
+            var stage67 = new Textstage("Interesting…", "");
+            var stage68 = new Textstage("The more of the Badges I collect, the more energy myself", "");
+            var stage69 = new Textstage("and the Badges produce.", "");
+            var stage70 = new Textstage("This is not a standard energy…", "");
+            var stage71 = new Textstage("!!", "right only");
+            var stage72 = new Textstage("Another Badge!", "left/right");
+            var stage73 = new Textstage("This Badge is located in an area that is high up.", "");
+            var stage74 = new Changebackgroundstage("It is the Feather Badge!", "left/right", "images/pokedexFeather.jpg");
+            var stage75 = new Inputstage("This place feels large, but is also high up.", "@lr", "");
+            
+            var stage76 = new Soundstage("Outstanding! Was it cold up there?", "advance only", "found_badge_sound");
+            var stage77 = new Textstage("I have detected another badge…", "right only");
+            var stage78 = new Textstage("This one has quite a strange energy.", "left/right");
+            var stage79 = new Changebackgroundstage("This is the Mind Badge I am detecting.", "", "images/pokedexMind.jpg");
+            var stage80 = new Textstage("I know it is located in a gym for the mind. A classroom?", "left/right");
+            var stage81 = new Inputstage("A library perhaps? Please enter what code it has.", "8rN", "")
+            
+            var stage82 = new Soundstage("Good work PLAYER_TITLE PLAYER_LAST!", "advance only", "found_badge_sound");
+            var stage83 = new Textstage("Based on preliminary data, I am building a theory of", "");
+            var stage84 = new Textstage("how I got here… but it is not valid enough to show yet.", "");
+            var stage85 = new Textstage("Just in time, I have found another Badge!", "right only");
+            var stage86 = new Textstage("This one nearly burns with ferocity", "left/right");
+            var stage87 = new Changebackgroundstage("It must be the Heat Badge!", "", "images/pokedexHeat.jpg");
+            var stage88 = new Textstage("It is located in an area that’s hot, but also cold.", "left/right");
+            var stage89 = new Inputstage("Please input RED’s Badge code.", "H07", "");
+            
+            var stage90 = new Soundstage("Superb! Only one Badge left! With that, I can confirm", "advance only", "found_badge_sound");
+            var stage91 = new Textstage("what energy is surrounding me!", "");
+            var stage92 = new Textstage("With all this data I have collected from the Badges,", "");
+            var stage93 = new Textstage("I can clearly detect the remaining two Badges.", "");
+            var stage94 = new Changebackgroundstage("We should find the Stone Badge next.", "right only", "images/pokedexStone.jpg");
+            var stage95 = new Textstage("This Badge is in an area that is hidden but out in the open, and", "left/right");
+            var stage96 = new Inputstage("full of stones. Please enter the Badge code when you find it.", "r0K", "");
+            
+            var stage97 = new Soundstage("Amazing! That was a very hard Badge to find!", "advance only", "found_badge_sound");
+            var stage98 = new Textstage("Now to analyze these energy signatures…", "");
+            var stage99 = new Textstage("I know what energy this is. This is the Quintessence of Hoenn!", "");
+            var stage100 = new Textstage("I do not belong here at all! This is a different dimension!", "");
+            var stage101 = new Textstage("When we find the last badge…", "");
+            var stage102 = new Textstage("I will go through a fold in space-time to go back to Hoenn,", "");
+            var stage103 = new Textstage("after the moment of the disaster.", "");
+            var stage104 = new Textstage("…I can finally see RED again.", "");
+            var stage105 = new Changebackgroundstage("Let us go find the Balance Badge.", "", "images/pokedexBalance.jpg");
+            var stage106 = new Textstage("I sense it in… the building where you found me, in a big room.", "left/right");
+            var stage107 = new Textstage("It is close by--I believe it is on the first floor, close", "left/right");
+            var stage108 = new Inputstage("to the entrance. Enter its code, and I can prepare to go home.", "8@L", "");
+            
+            var stage109 = new Soundstage("This is wonderful! I know what happened now!", "advance only", "completed_hunt_sound");
+            var stage110 = new Textstage("Somehow, only I was affected in a dimensional transfer while I was", "");
+            var stage111 = new Textstage("with my Trainer. I was transported here, and his Badges scattered nearby", "");
+            var stage112 = new Textstage("in areas that resonated with their spirit.", "");
+            var stage113 = new Textstage("Now that I am together with all the things from Hoenn,", "");
+            var stage114 = new Textstage("There will be an energy cascade, teleporting everything back.", "");
+            var stage115 = new Textstage("Actually… calculating…", "");
+            var stage116 = new Textstage("No. Only one thing can go back. Since I have the largest mass…", "");
+            var stage117 = new Textstage("It seems only I can go back. RED will have to lose his Badges.", "");
+            var stage118 = new Textstage("Please, take them as a reward for helping me.", "");
+            var stage119 = new Textstage("I could not possibly thank you enough for your help!", "");
+            var stage120 = new Textstage("It is happening… I must go now. Thank you!", "");
+            var stage121 = new Textstage("I will tell RED about all your help PLAYER_FIRST!", "");
+            var stage122 = new Textstage("", "end");
+            var stage123 = new Textstage("", "");
+            var stage124 = new Textstage("Analyzing…", "advance only");
+            var stage125 = new Textstage("Sorry, that is not correct.", "advance only");
+            //-----------------------------------------------------------------------------------------------SCRIPT 
+                
+            
+            
+            function changeStage(string){
+                if (string == "forward" && STAGE_COUNTER < (STAGE_ARRAY.length - 1)){
+                    STAGE_COUNTER++;
+                }
+                else if(string == "backward" && STAGE_COUNTER > 0){
+                    STAGE_COUNTER--;
+                    player.timesWentBack++;
+                }
+                
+                changeStageType(STAGE_ARRAY[STAGE_COUNTER].getStyleCode());// first to avoid style/STAGE_COUNTER conflicts when loading
+                processStage(STAGE_COUNTER);
+                changeText(STAGE_COUNTER);
+                
+                if(STAGE_COUNTER != 124){
+                    STAGE_ARRAY[STAGE_COUNTER].setViewed(true);
+                }   
+            }
+            
+            
+            function processStage(num){
+                var string = STAGE_ARRAY[num].getText();
+                
+                if (string.includes("PLAYER_FIRST")){
+                    string = string.replace("PLAYER_FIRST", player.getFirstName());//converts any string matching "PLAYER_FIRST" into what the variable PLAYER_FIRST actually is.
+                } 
+                if (string.includes("PLAYER_LAST")){
+                    if (player.getLastName() != ""){
+                        string = string.replace("PLAYER_LAST", player.getLastName());
+                    }
+                    else{
+                        string = string.replace("PLAYER_LAST", player.getFirstName());
+                    }
+                } 
+                if (string.includes("PLAYER_TITLE")){
+                    string = string.replace("PLAYER_TITLE", player.getTitle());
+                }
+                
+                CHAR_ARRAY = string.split("");
+                
+                if (DEBUG == true){
+                    CHAR_ARRAY.unshift("(" + STAGE_COUNTER + ")");
+                    
+                    if (STAGE_ARRAY[num] instanceof Inputstage){
+                        CHAR_ARRAY.unshift("(Ans: " + STAGE_ARRAY[STAGE_COUNTER].getExpectedInput() + ") ");
+                    }
+                }
+                
+                if (STAGE_ARRAY[num] instanceof Loadstage){
+                    STAGE_COUNTER = STAGE_ARRAY[num].getStageNumToLoad(); 
+                }
+                
+                if (STAGE_ARRAY[num] instanceof Soundstage){
+                    document.getElementById(STAGE_ARRAY[num].soundCode).play();
+                }
+                
+                if (STAGE_ARRAY[num] instanceof Changebackgroundstage){
+                    document.getElementById("backImage").src = STAGE_ARRAY[num].pictureLoc
+                }
+                
+                
+                switch(STAGE_COUNTER){//---------------------------------------------------------------------------------------------STAGE CHANGES
+                    case 31: // for responding "no" to stage 30
+                        STAGE_COUNTER = 24;
+                    case 122:
+                        document.getElementById("backImage").src="images/pokedexOff.jpg"
+                        document.getElementById("pokedex_off_sound").play();
+                        break;
+                    case 124:
+                        if(STAGE_ARRAY[PREV_STAGE_NUM].getCodeCorrect() == true){
+                            STAGE_COUNTER = (PREV_STAGE_NUM);
+                        }
+                        break;
+                    case 125:
+                            STAGE_COUNTER = (PREV_STAGE_NUM - 1); 
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+           function changeStageType(string){
+                if (string == "left/right"){
+                    document.getElementById("yesButton").style.visibility = "hidden";
+                    document.getElementById("noButton").style.visibility = "hidden";
+                    document.getElementById("inputTextBox").style.visibility = "hidden";
+                    document.getElementById("submitText").style.visibility = "hidden";
+                    document.getElementById("advanceButton").style.visibility = "hidden";
+                    document.getElementById("girlButton").style.visibility = "hidden";
+                    document.getElementById("guyButton").style.visibility = "hidden";
+                        
+                    document.getElementById("leftArrowButton").style.visibility = "visible";
+                    document.getElementById("rightArrowButton").style.visibility = "visible";
+                }
+                else if (string == "left only"){
+                    document.getElementById("yesButton").style.visibility = "hidden";
+                    document.getElementById("noButton").style.visibility = "hidden";
+                    document.getElementById("inputTextBox").style.visibility = "hidden";
+                    document.getElementById("submitText").style.visibility = "hidden";
+                    document.getElementById("advanceButton").style.visibility = "hidden";
+                    document.getElementById("rightArrowButton").style.visibility = "hidden";
+                    document.getElementById("girlButton").style.visibility = "hidden";
+                    document.getElementById("guyButton").style.visibility = "hidden";
+                        
+                    document.getElementById("leftArrowButton").style.visibility = "visible";
+                }
+                else if (string == "right only"){
+                    document.getElementById("yesButton").style.visibility = "hidden";
+                    document.getElementById("noButton").style.visibility = "hidden";
+                    document.getElementById("inputTextBox").style.visibility = "hidden";
+                    document.getElementById("submitText").style.visibility = "hidden";
+                    document.getElementById("advanceButton").style.visibility = "hidden";
+                    document.getElementById("leftArrowButton").style.visibility = "hidden";
+                    document.getElementById("girlButton").style.visibility = "hidden";
+                    document.getElementById("guyButton").style.visibility = "hidden";
+                        
+                    document.getElementById("rightArrowButton").style.visibility = "visible";
+                }
+                else if (string == "advance only"){
+                    document.getElementById("yesButton").style.visibility = "hidden";
+                    document.getElementById("noButton").style.visibility = "hidden";
+                    document.getElementById("inputTextBox").style.visibility = "hidden";
+                    document.getElementById("submitText").style.visibility = "hidden";
+                    document.getElementById("leftArrowButton").style.visibility = "hidden";
+                    document.getElementById("rightArrowButton").style.visibility = "hidden";
+                    document.getElementById("girlButton").style.visibility = "hidden";
+                    document.getElementById("guyButton").style.visibility = "hidden";
+                        
+                    document.getElementById("advanceButton").style.visibility = "visible";
+                }
+                else if (string == "submit only"){
+                    document.getElementById("yesButton").style.visibility = "hidden";
+                    document.getElementById("noButton").style.visibility = "hidden";
+                    document.getElementById("advanceButton").style.visibility = "hidden";
+                    document.getElementById("rightArrowButton").style.visibility = "hidden";
+                    document.getElementById("girlButton").style.visibility = "hidden";
+                    document.getElementById("guyButton").style.visibility = "hidden";  
+                    document.getElementById("leftArrowButton").style.visibility = "hidden";
+                    
+                    document.getElementById("inputTextBox").style.visibility = "visible";
+                    document.getElementById("submitText").style.visibility = "visible";
+                }
+                else if (string == "left with submit"){
+                    document.getElementById("yesButton").style.visibility = "hidden";
+                    document.getElementById("noButton").style.visibility = "hidden";
+                    document.getElementById("advanceButton").style.visibility = "hidden";
+                    document.getElementById("rightArrowButton").style.visibility = "hidden";
+                    document.getElementById("girlButton").style.visibility = "hidden";
+                    document.getElementById("guyButton").style.visibility = "hidden";
+                        
+                    document.getElementById("leftArrowButton").style.visibility = "visible";
+                    document.getElementById("inputTextBox").style.visibility = "visible";
+                    document.getElementById("submitText").style.visibility = "visible";
+                }
+                else if (string == "yes/no"){
+                    document.getElementById("inputTextBox").style.visibility = "hidden";
+                    document.getElementById("submitText").style.visibility = "hidden";
+                    document.getElementById("advanceButton").style.visibility = "hidden";
+                    document.getElementById("rightArrowButton").style.visibility = "hidden";
+                    document.getElementById("leftArrowButton").style.visibility = "hidden";
+                    document.getElementById("girlButton").style.visibility = "hidden";
+                    document.getElementById("guyButton").style.visibility = "hidden";
+                        
+                    document.getElementById("yesButton").style.visibility = "visible";
+                    document.getElementById("noButton").style.visibility = "visible";
+                }
+                else if (string == "guy/girl"){
+                    document.getElementById("yesButton").style.visibility = "hidden";
+                    document.getElementById("noButton").style.visibility = "hidden";
+                    document.getElementById("inputTextBox").style.visibility = "hidden";
+                    document.getElementById("submitText").style.visibility = "hidden";
+                    document.getElementById("advanceButton").style.visibility = "hidden";
+                    document.getElementById("rightArrowButton").style.visibility = "hidden";
+                    document.getElementById("leftArrowButton").style.visibility = "hidden";
+                    
+                    
+                    document.getElementById("girlButton").style.visibility = "visible";
+                    document.getElementById("guyButton").style.visibility = "visible";
+                }
+                else if (string == "end"){
+                    document.getElementById("yesButton").style.visibility = "hidden";
+                    document.getElementById("noButton").style.visibility = "hidden";
+                    document.getElementById("inputTextBox").style.visibility = "hidden";
+                    document.getElementById("submitText").style.visibility = "hidden";
+                    document.getElementById("advanceButton").style.visibility = "hidden";
+                    document.getElementById("rightArrowButton").style.visibility = "hidden";
+                    document.getElementById("leftArrowButton").style.visibility = "hidden";
+                    document.getElementById("girlButton").style.visibility = "hidden";
+                    document.getElementById("guyButton").style.visibility = "hidden";
+                    document.getElementById("centerBox").style.visibility = "hidden";
+                    document.getElementById("pokedexTextBox").style.visibility = "hidden";
+                    document.getElementById("hintButton").style.visibility = "hidden";
+                    document.getElementById("advanceButton").style.visibility = "hidden";
+                    document.getElementById("nameBox").style.visibility = "hidden";
+                }
+                else if (string == ""){
+                    //console.log("No style change in stage.")
+                }
+                else
+                {
+                    window.alert("incorrect string in changeStageType('string')!")
+                }
+            }
+            
+            
+            function waitOnNextChar(interval){
+                timeoutVar = setTimeout(insertChar, interval)
+            }
+            
+             function changeText(num){
+                clearTimeout(timeoutVar);
+                CHAR_INDEX = 0;
+                CURR_CHAR = CHAR_ARRAY[CHAR_INDEX];
+                document.getElementById("pokedexTextBox").innerHTML = "";
+                if (STAGE_ARRAY[STAGE_COUNTER].getViewed() == false){
+                    insertChar();
+                }
+                else{
+                    playVoice(incrementVoiceNum());
+                    document.getElementById("pokedexTextBox").innerHTML = CHAR_ARRAY.join("");
+                }
+            }
+            
+            function insertChar(){
+                CURR_CHAR = CHAR_ARRAY[CHAR_INDEX];
+                if (CHAR_INDEX <= (CHAR_ARRAY.length - 1)){
+                    document.getElementById("pokedexTextBox").innerHTML += CURR_CHAR;
+                    CHAR_INDEX++;
+                    if (CURR_CHAR == ","){
+                        playVoice(incrementVoiceNum());
+                        waitOnNextChar(200);
+                    }
+                    else if (CURR_CHAR == "."){
+                        playVoice(7);
+                        waitOnNextChar(500);
+                    }
+                    else if (CURR_CHAR == "!"){
+                        playVoice(8);
+                        waitOnNextChar(500);
+                    }
+                    else if (CURR_CHAR == "?"){
+                        playVoice(9);
+                        waitOnNextChar(500);
+                    }
+                    else{
+                        playVoice(incrementVoiceNum());
+                        waitOnNextChar(50);
+                    }
+                }
+            }
+            
+            function incrementVoiceNum(){
+                if (VOICE_NUM <= 5){
+                    VOICE_NUM++;
+                }
+                else {
+                    VOICE_NUM = 1;
+                }
+                return VOICE_NUM;
+            }
+            
+            function playVoice(num){
+                if (num == 1){
+                    document.getElementById("beep1").play();
+                }
+                else if (num == 2){
+                    document.getElementById("beep2").play();
+                }
+                else if (num == 3){
+                    document.getElementById("beep3").play();
+                } 
+                else if (num == 4){
+                    document.getElementById("beep4").play();
+                }
+                 else if (num == 5){
+                    document.getElementById("beep5").play();
+                }
+                else if (num == 6){
+                    document.getElementById("beep6").play();
+                }
+                else if (num == 7){
+                    document.getElementById("beep_p").play();
+                }
+                else if (num == 8){
+                    document.getElementById("beep_x").play();
+                }
+                else{
+                    document.getElementById("beep_q").play();
+                }
+            }
+            
+            
+            function processInput(){//-----------------------------------------------------------------------------------------------SUBMIT OPTIONS
+                STAGE_ARRAY[STAGE_COUNTER].setInput(document.getElementById("inputTextBox").value);
+                
+                if(STAGE_ARRAY[STAGE_COUNTER].getExpectedInput() != ""){
+                    STAGE_ARRAY[STAGE_COUNTER].validateInput();
+                    
+                    PREV_STAGE_NUM = STAGE_COUNTER;
+                    STAGE_COUNTER = STAGE_ARRAY.length - 3;//note, this means that any "processing..." stages must be at the end of the STAGE_ARRAY
+                    changeStage("");
+                }
+                
+                else if(STAGE_ARRAY[STAGE_COUNTER].getInputType() == "PLAYER_NAME"){
+                    player.setName(STAGE_ARRAY[STAGE_COUNTER].getInput());
+                    document.getElementById("nameBox").innerHTML = player.getFirstName() + " " + player.getLastName();
+                }
+                
+                else if(STAGE_ARRAY[STAGE_COUNTER].getInputType() == "LOAD"){
+                    PREV_STAGE_NUM = STAGE_COUNTER;
+                    if(DEBUG == true){
+                        console.log("PREV_STAGE_NUM set: " + PREV_STAGE_NUM);
+                    }
+                    for(i = STAGE_COUNTER; i < STAGE_ARRAY.length - 1; i++){
+                        if(STAGE_ARRAY[i] instanceof Inputstage){
+                            if(DEBUG == true){
+                                console.log("Stage " + i + " detected as Inputstage");
+                            }
+                            STAGE_ARRAY[i].setInput(STAGE_ARRAY[PREV_STAGE_NUM].getInput());
+                            STAGE_ARRAY[i].validateInput();
+                            if(DEBUG == true){
+                            console.log("input " + STAGE_ARRAY[PREV_STAGE_NUM].getInput() + " vs " + STAGE_ARRAY[i].getExpectedInput());
+                            }
+                            if(STAGE_ARRAY[i].codeCorrect == true){
+                                if(DEBUG == true){
+                                    console.log("Code match.");
+                                }
+                                for(x = 0; x < STAGE_ARRAY.length - 1; x++){
+                                    if(STAGE_ARRAY[x] instanceof Loadstage){
+                                        console.log("Loadstage found at Stage " + STAGE_COUNTER + ". Setting internal stageNumToLoad.");
+                                        STAGE_ARRAY[x].setStageNumToLoad(i);
+                                    }
+                                }
+                                STAGE_COUNTER = PREV_STAGE_NUM;
+                                STAGE_ARRAY[STAGE_COUNTER + 1];
+                                break;
+                            }
+                            else{
+                                if(DEBUG == true){
+                                    console.log("No code match.");
+                                }
+                                STAGE_COUNTER = 9;
+                            }
+                        }
+                    }
+                }
+                
+                document.getElementById("inputTextBox").value = "";
+                changeStage("forward");
+                
+            }
+            
+            function setPlayerGender(string){
+                player.setGender(string);
+                
+                if(string == "Man"){
+                    player.setTitle("Mister");
+                    document.getElementById("hintButton").src = "images/pokedexMan.png"; 
+                }
+                else if(string == "Woman"){
+                    player.setTitle("Miss");
+                    document.getElementById("hintButton").src = "images/pokedexWoman.png"; 
+                }
+                
+                STAGE_COUNTER++;
+                changeStage("");
+            }
+            
+            
+             function respondYes(){//-----------------------------------------------------------------------------------YES OPTIONS
+                if (STAGE_COUNTER == 3){
+                    STAGE_COUNTER++;
+                    }
+                
+                else if (STAGE_COUNTER == 19){
+                    STAGE_COUNTER = 22;
+                }
+                else if (STAGE_COUNTER == 20){
+                    STAGE_COUNTER = 22;
+                }
+                else if (STAGE_COUNTER == 21){
+                    STAGE_COUNTER = 22;
+                }
+                else if (STAGE_COUNTER == 30){
+                    STAGE_COUNTER = 32;
+                }
+                changeStage("");
+            }
+            
+            function respondNo(){//---------------------------------------------------------------------------------NO OPTIONS
+                if (STAGE_COUNTER == 3){
+                    STAGE_COUNTER = 10; 
+                }
+                else if (STAGE_COUNTER == 19){
+                    STAGE_COUNTER++;
+                }
+                else if (STAGE_COUNTER == 20){
+                    STAGE_COUNTER++;
+                }
+                else if (STAGE_COUNTER == 21){
+                    //literally do nothing, because the no button already handles changing stages, and since the STAGE_COUNTER hasnt gone up,
+                    //it will display the same page over and over again until yes is said.
+                }
+                else if (STAGE_COUNTER == 30){
+                    STAGE_COUNTER++;
+                }
+                
+                changeStage("");
+            }
+            
+            function picChange(){
+                if(! PIC_CHANGE_CALL){
+                    document.getElementById("backImage").src="images/pokedexOn.jpg"
+                    document.getElementById("centerBox").style.visibility = "visible";
+                    document.getElementById("pokedexTextBox").style.visibility = "visible";
+                    document.getElementById("hintButton").style.visibility = "visible";
+                    document.getElementById("advanceButton").style.visibility = "visible";
+                    PIC_CHANGE_CALL=true;
+                    document.getElementById("pokedex_on_sound").play();
+                }
+            }
+            
+        </script>    
+    </head>
+    <body>
+        <div class = "fluid-container" style="height: 100%; position: relative";>
+            <img src = "images/pokedexOff.jpg" id="backImage" onclick="picChange()">
+            <div class = "fluid-container" id="pokedexTextBox">
+                H͙̩̹̺͕̘̍ͥ̀ ě͔͓̟͈̠̝ͫ̋͆ͦ͆̌́͡ f̃̍͌̾͛̚҉̼̳̝͔̠̝ r̬̭̯̰͖̈̓ͣͤ͂́̇̉͒̀͢͞<!-- This is needed because the first stage isnt in changeStage() -->
+            </div>
+                
+            <div id="centerBox">
+                <input type="text" name="textfield" placeholder="Enter text here" id="inputTextBox" >
+                <button id="submitText" onclick="processInput()"></button>
+
+            </div>    
+              
+            <div id="nameBox"></div>
+            <img id = "leftArrowButton" src = "images/leftArrow.png" onclick = "changeStage('backward')">
+            <img id = "rightArrowButton" src = "images/rightArrow.png" onclick = "changeStage('forward')">
+            <img id = "advanceButton" src = "images/rightArrow.png" onclick = "changeStage('forward')">
+            <img id = "girlButton" src = "images/girlButton.png" onclick = "setPlayerGender('Woman')">
+            <img id = "guyButton" src = "images/guyButton.png" onclick = "setPlayerGender('Man')">
+            <img id = "yesButton" src = "images/yesButton.png" onclick = "respondYes()">
+            <img id = "noButton" src = "images/noButton.png" onclick = "respondNo()">
+            <img id = "hintButton" src="images/pokedexHint.png">
+
+
+            <audio src = "sounds/beep_1.mp3" id = "beep1"></audio>
+            <audio src = "sounds/beep_2.mp3" id = "beep2"></audio>
+            <audio src = "sounds/beep_3.mp3" id = "beep3"></audio>
+            <audio src = "sounds/beep_4.mp3" id = "beep4"></audio>
+            <audio src = "sounds/beep_5.mp3" id = "beep5"></audio>
+            <audio src = "sounds/beep_6.mp3" id = "beep6"></audio>
+            <audio src = "sounds/beep_p.mp3" id = "beep_p"></audio>
+            <audio src = "sounds/beep_x.mp3" id = "beep_x"></audio>   
+            <audio src = "sounds/beep_q.mp3" id = "beep_q"></audio>
+            
+            <audio src = "sounds/found_badge_2.mp3" id = "found_badge_sound"></audio>
+            <audio src = "sounds/completed_load.mp3" id = "completed_load_sound"></audio>
+            <audio src = "sounds/completed_hunt_2.mp3" id = "completed_hunt_sound"></audio>
+            <audio src = "sounds/pokedex_on.mp3" id = "pokedex_on_sound"></audio>
+            <audio src = "sounds/pokedex_off.mp3" id = "pokedex_off_sound"></audio>
+        </div>
+    </body>
+</html>

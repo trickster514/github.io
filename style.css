@@ -1,0 +1,78 @@
+.myNavbar{
+    /*margin-bottom: 0;*/
+    border-radius: 0;
+       
+}
+.navbar-brand{
+    width: 50px;
+    height: 50px;
+    background-image: url(logo.png);
+    background-size: cover;
+
+    
+}
+.nav a:hover:{
+    background-color: #00CBD9;
+}
+ul{
+    background-color: #003033;
+    /*position: fixed;
+    top: 0;*/
+}
+.nav{
+    background-color: #1C3D4D;
+    color:"#00848C"
+}
+.container-fluid{
+    width: 70%;
+/* 
+    background: #e6e6e6;
+    background-image: linear-gradient(#ffffff, #e6e6e6,  #ffffff);
+    font-family: 'Fjalla One', sans-serif;
+    font-family: 'Arima Madurai';
+*/
+    box-shadow: 0px 20px 40px 0px #d9d9d9;
+}
+iframe{
+    width: 100%;
+    height:750px;
+    float: inherit;
+}
+/*
+.dropdown {
+  float: left;
+ overflow: hidden; 
+}
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+*/
