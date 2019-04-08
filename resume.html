@@ -2,8 +2,9 @@
 <html>
 <head>
     <title>Patrick's Brokenness</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 <!--code used from:
     
 https://chromium.googlesource.com/chromium/src/+/d749245dd21f06f58242fe41ce2ea9dbb014485b/chrome/browser/resources/pdf/elements/viewer-pdf-toolbar/viewer-pdf-toolbar.html
@@ -23,24 +24,23 @@ https://chromium.googlesource.com/chromium/src/+/d749245dd21f06f58242fe41ce2ea9d
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body> 
-    <nav class="navbar navbar-inverse" style="background-color: #063C3F">
-        
+    <nav class="navbar navbar-expand-sm sticky-top" id="navBar" >
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a draggable="false" class="navbar-brand" href="index.html" ></a>
+                <a draggable="false" class="navbar-brand" href="index.html"  ></a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.html">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="projects.html">Programming Projects</a></li>
                     <li><a href="portfolio.html">Graphics</a></li>
                     <li><a href="resume.html">Resume</a></li>
                     <li><a href="contact.html">Contact</a></li>
-                                        <li class="dropdown">
+                    <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Finished Web Projects
                         <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -51,7 +51,6 @@ https://chromium.googlesource.com/chromium/src/+/d749245dd21f06f58242fe41ce2ea9d
                         
                 </ul>
             </div>
-       
     </nav>
     <div class="container-fluid">
     <iframe src="Resume.pdf">
