@@ -53,7 +53,15 @@ body{
     text-align: center;
     float: inherit;
     color:aliceblue;
-    background-image: url("gay_landscape_09-06-018.jpg");
+    background-image: url("gay_landscape_09-06-0182.jpg");
     height: 275px;
     width: auto;
+}
+.affix{
+    top: 0;
+    width: 100%;
+    z-index: 9999 !important;
+}
+.affix + .container-fluid{
+    padding-top: 30px;
 }
