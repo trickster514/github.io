@@ -1,28 +1,29 @@
 .myNavbar{
     /*margin-bottom: 0;*/
     border-radius: 0;
-       
+     background-color: #1C3D4D;
 }
 .navbar-brand{
-    width: 50px;
-    height: 50px;
+    width: 67px;
+    height: 55px;
     background-image: url(logo.png);
     background-size: cover;
-
+    
     
 }
 .nav a:hover:{
-    background-color: #00CBD9;
-    color: #00CBD9;
-    
+   color:black;
+ background-color: #1C3D4D;
 }
 
 ul{
-    background-color: #1C3D4D;
+    background-color: #57B986;
     top: 0;
+    color: black;
 }
 #navBar{
     background-color: #57B986;
+    color: black;
     
 }
 
@@ -43,6 +44,9 @@ iframe{
     volume: 0;
     
 }
+head{
+    background-color: #1C3D4D;
+}
 body{
     background-color: #1C3D4D;
 }
@@ -53,6 +57,7 @@ body{
     text-align: center;
     float: inherit;
     color:aliceblue;
+    
     background-image: url("gay_landscape_09-06-0182.jpg");
     height: 275px;
     width: auto;
@@ -64,4 +69,10 @@ body{
 }
 .affix + .container-fluid{
     padding-top: 30px;
+}
+h1{
+    color: #57B986;
+}
+.item{
+    height: 500px;
 }
